@@ -29,3 +29,18 @@ export class UpdateUserValidator {
     lastName: schema.string.optional([rules.trim()]),
   })
 }
+export class ResetUserPasswordValidator {
+  constructor(protected ctx: HttpContextContract) {}
+
+  public schema = schema.create({
+    token: schema.string([
+      rules.exists({ table: 'tokens', column: 'token', caseInsensitive: true }),
+    ]),
+    email: schema.string([
+      rules.email(),
+      rules.trim(),
+      rules.exists({ table: 'users', column: 'email', caseInsensitive: true }),
+    ]),
+    password: schema.string([rules.minLength(8)]),
+  })
+}

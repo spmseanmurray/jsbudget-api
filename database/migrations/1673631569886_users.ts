@@ -12,12 +12,11 @@ export default class extends BaseSchema {
       table.string('password')
       table.string('first_name')
       table.string('last_name')
+      table.string('remember_me_token').nullable()
+      table.boolean('is_email_verified').notNullable().defaultTo(false)
 
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
+      table.timestamp('created_at')
+      table.timestamp('updated_at')
     })
   }
 
