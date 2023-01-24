@@ -33,9 +33,6 @@ export default class User extends BaseModel {
   public lastName: string
 
   @column()
-  public rememberMeToken: string | null
-
-  @column()
   public isEmailVerified: boolean = false
 
   @computed()

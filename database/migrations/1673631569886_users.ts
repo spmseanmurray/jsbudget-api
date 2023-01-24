@@ -12,7 +12,6 @@ export default class extends BaseSchema {
       table.string('password')
       table.string('first_name')
       table.string('last_name')
-      table.string('remember_me_token').nullable()
       table.boolean('is_email_verified').notNullable().defaultTo(false)
 
       table.timestamp('created_at')
