@@ -8,8 +8,8 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.integer('role_id').unsigned().references('id').inTable('roles').defaultTo(Roles.USER)
-      table.string('email')
-      table.string('password')
+      table.string('email').notNullable()
+      table.string('password').notNullable()
       table.string('first_name')
       table.string('last_name')
       table.boolean('is_email_verified').notNullable().defaultTo(false)

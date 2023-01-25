@@ -12,6 +12,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Token from './Token'
+import Transaction from './Transaction'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -51,6 +52,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Token)
   public tokens: HasMany<typeof Token>
+
+  @hasMany(() => Transaction)
+  public transactions: HasMany<typeof Transaction>
 
   @beforeSave()
   public static async hashPassword(user: User) {
