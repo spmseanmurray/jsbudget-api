@@ -13,6 +13,7 @@ import {
 import Role from './Role'
 import Token from './Token'
 import Transaction from './Transaction'
+import Category from './Category'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -55,6 +56,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Transaction)
   public transactions: HasMany<typeof Transaction>
+
+  @hasMany(() => Category)
+  public catagories: HasMany<typeof Category>
 
   @beforeSave()
   public static async hashPassword(user: User) {

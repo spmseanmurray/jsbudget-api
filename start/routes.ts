@@ -17,8 +17,18 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'UsersController.index')
   Route.get('/:id', 'UsersController.show')
-  Route.post('/:id', 'UsersController.update')
+  Route.put('/:id', 'UsersController.update')
   Route.delete('/:id', 'UsersController.destroy')
 })
   .prefix('users')
   .middleware(['auth', 'role:admin'])
+
+Route.group(() => {
+  Route.get('/', 'CategoriesController.index')
+  Route.get('/:id', 'CategoriesController.show')
+  Route.post('/', 'CategoriesController.create')
+  Route.put('/:id', 'CategoriesController.update')
+  Route.delete('/:id', 'CategoriesController.destroy')
+})
+  .prefix('categories')
+  .middleware(['auth'])

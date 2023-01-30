@@ -13,15 +13,15 @@ export default class Category extends BaseModel {
   @column()
   public category: string
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
   @hasMany(() => Subcategory)
-  public categories: HasMany<typeof Subcategory>
+  public subcategories: HasMany<typeof Subcategory>
 }
