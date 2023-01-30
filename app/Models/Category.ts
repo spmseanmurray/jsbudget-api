@@ -13,6 +13,9 @@ export default class Category extends BaseModel {
   @column()
   public category: string
 
+  @column()
+  public color: string
+
   @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 

@@ -15,6 +15,7 @@ export class CreateCategoryValidator {
       .members(
         schema.string([rules.alpha({ allow: ['space'] }), rules.trim(), rules.maxLength(100)])
       ),
+    color: schema.string([rules.minLength(6), rules.maxLength(7)]),
   })
 }
 
@@ -37,5 +38,6 @@ export class UpdateCategoryValidator {
         ]),
       })
     ),
+    color: schema.string.optional([rules.minLength(6), rules.maxLength(7)]),
   })
 }

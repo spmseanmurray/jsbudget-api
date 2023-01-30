@@ -28,9 +28,9 @@ export default class CategoriesController {
   public async create({ request, response, auth }: HttpContextContract) {
     if (!auth.user) return response.unauthorized()
 
-    const { category, subcategories } = await request.validate(CreateCategoryValidator)
+    const { category, subcategories, color } = await request.validate(CreateCategoryValidator)
 
-    const createdCategory = await auth.user.related('catagories').create({ category })
+    const createdCategory = await auth.user.related('catagories').create({ category, color })
 
     if (subcategories) {
       const createdSubcategories = await createdCategory.related('subcategories').createMany(
@@ -47,7 +47,7 @@ export default class CategoriesController {
 
   public async update({ request, response, auth }: HttpContextContract) {
     const { id } = request.params()
-    const { category, subcategories } = await request.validate(UpdateCategoryValidator)
+    const { category, subcategories, color } = await request.validate(UpdateCategoryValidator)
 
     if (!auth.user) return response.unauthorized()
 
@@ -59,7 +59,9 @@ export default class CategoriesController {
         .where('id', id)
         .firstOrFail()
 
-      const updatedCategory = await categoryToUpdate.merge({ category }).save()
+      const updatedCategory = color
+        ? await categoryToUpdate.merge({ category, color }).save()
+        : await categoryToUpdate.merge({ category }).save()
 
       if (subcategories) {
         const updatedSubcategories = await Promise.all(
