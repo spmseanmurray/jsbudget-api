@@ -42,8 +42,6 @@ export default class TransactionsController {
 
     const payload = await request.validate(CreateTransactionValidator)
 
-    console.log(payload, payload.date, DateTime.fromFormat(payload.date, 'yyyy-mm-dd'))
-
     const transaction = await auth.user
       .related('transactions')
       .create({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-mm-dd') })
