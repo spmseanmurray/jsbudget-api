@@ -15,14 +15,20 @@ export default class CategoriesController {
 
     if (!auth.user) return response.unauthorized()
 
-    const category = await auth.user
-      .related('catagories')
-      .query()
-      .preload('subcategories')
-      .where('id', id)
-      .firstOrFail()
+    try {
+      const category = await auth.user
+        .related('catagories')
+        .query()
+        .preload('subcategories')
+        .where('id', id)
+        .firstOrFail()
 
-    return response.json(category)
+      return response.json(category)
+    } catch {
+      return response.unprocessableEntity({
+        error: 'request could not be completed due to semantic errors',
+      })
+    }
   }
 
   public async create({ request, response, auth }: HttpContextContract) {

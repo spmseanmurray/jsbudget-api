@@ -32,3 +32,13 @@ Route.group(() => {
 })
   .prefix('categories')
   .middleware(['auth'])
+
+Route.group(() => {
+  Route.get('/', 'TransactionsController.index')
+  Route.get('/:id', 'TransactionsController.show')
+  Route.post('/', 'TransactionsController.create')
+  Route.put('/:id', 'TransactionsController.update')
+  Route.delete('/:id', 'TransactionsController.destroy')
+})
+  .prefix('transactions')
+  .middleware(['auth'])
