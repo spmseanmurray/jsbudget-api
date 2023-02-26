@@ -44,7 +44,7 @@ export default class TransactionsController {
 
     const transaction = await auth.user
       .related('transactions')
-      .create({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-mm-dd') })
+      .create({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-MM-dd') })
 
     return response.json(transaction)
   }
@@ -65,7 +65,7 @@ export default class TransactionsController {
         .firstOrFail()
 
       const updatedTransaction = await transacton
-        .merge({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-mm-dd') })
+        .merge({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-MM-dd') })
         .save()
 
       response.json(updatedTransaction)
