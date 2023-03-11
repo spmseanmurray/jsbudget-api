@@ -6,16 +6,23 @@ import PasswordResetEmail from 'App/Mailers/PasswordResetEmail'
 import { ResetUserPasswordValidator } from 'App/Validators/UserValidator'
 
 export default class PasswordResetController {
-  public async send({ request }: HttpContextContract) {
+  public async send({ request, response }: HttpContextContract) {
     const emailSchema = schema.create({
       email: schema.string([rules.email()]),
     })
 
     const { email } = await request.validate({ schema: emailSchema })
-    const user = await User.findByOrFail('email', email)
-    const token = await Token.generatePasswordResetToken(user)
 
-    await new PasswordResetEmail(user, token).sendLater()
+    try {
+      const user = await User.findByOrFail('email', email)
+      const token = await Token.generatePasswordResetToken(user)
+
+      await new PasswordResetEmail(user, token).sendLater()
+    } catch {
+      return response.unprocessableEntity({
+        error: 'request could not be completed due to semantic errors',
+      })
+    }
   }
 
   public async verify({ request, response }: HttpContextContract) {
