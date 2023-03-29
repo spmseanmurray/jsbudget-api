@@ -17,7 +17,7 @@ export class CreateTransactionValidator {
       rules.unsigned(),
       rules.exists({ table: 'categories', column: 'id' }),
     ]),
-    subcategoryId: schema.number.nullable([
+    subcategoryId: schema.number.optional([
       rules.unsigned(),
       rules.exists({ table: 'subcategories', column: 'id' }),
     ]),

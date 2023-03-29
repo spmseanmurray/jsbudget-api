@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Subcategory from './Subcategory'
+import TransactionType from 'App/Enum/TransactionType'
 
 export default class Category extends BaseModel {
   @column({ isPrimary: true })
@@ -12,6 +13,9 @@ export default class Category extends BaseModel {
 
   @column()
   public category: string
+
+  @column()
+  public type: TransactionType
 
   @column()
   public color: string

@@ -46,7 +46,7 @@ export default sessionConfig({
   | The name of the cookie that will hold the session id.
   |
   */
-  cookieName: 'adonis-session',
+  cookieName: 'jsbudget-session',
 
   /*
   |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ export default sessionConfig({
   */
   cookie: {
     path: '/',
-    httpOnly: true,
+    httpOnly: false,
     sameSite: false,
   },
 

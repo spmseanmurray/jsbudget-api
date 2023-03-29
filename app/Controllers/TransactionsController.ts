@@ -11,6 +11,7 @@ export default class TransactionsController {
       .query()
       .preload('category')
       .preload('subcategory')
+      .orderBy('date', 'desc')
 
     return response.json(transactions)
   }
@@ -42,11 +43,23 @@ export default class TransactionsController {
 
     const payload = await request.validate(CreateTransactionValidator)
 
-    const transaction = await auth.user
-      .related('transactions')
-      .create({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-MM-dd') })
+    try {
+      let transaction = await auth.user
+        .related('transactions')
+        .create({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-MM-dd') })
 
-    return response.json(transaction)
+      transaction = await auth.user
+        .related('transactions')
+        .query()
+        .preload('category')
+        .preload('subcategory')
+        .where('id', transaction.id)
+        .firstOrFail()
+
+      return response.json(transaction)
+    } catch {
+      return response.badRequest()
+    }
   }
 
   public async update({ request, response, auth }: HttpContextContract) {
@@ -59,14 +72,20 @@ export default class TransactionsController {
       const transacton = await auth.user
         .related('transactions')
         .query()
-        .preload('category')
-        .preload('subcategory')
         .where('id', id)
         .firstOrFail()
 
-      const updatedTransaction = await transacton
+      let updatedTransaction = await transacton
         .merge({ ...payload, date: DateTime.fromFormat(payload.date, 'yyyy-MM-dd') })
         .save()
+
+      updatedTransaction = await auth.user
+        .related('transactions')
+        .query()
+        .preload('category')
+        .preload('subcategory')
+        .where('id', updatedTransaction.id)
+        .firstOrFail()
 
       response.json(updatedTransaction)
     } catch {

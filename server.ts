@@ -14,6 +14,11 @@ import 'reflect-metadata'
 import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
 
+var types = require('pg').types
+types.setTypeParser(1700, function (val) {
+  return parseFloat(val)
+})
+
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
 new Ignitor(__dirname).httpServer().start()
