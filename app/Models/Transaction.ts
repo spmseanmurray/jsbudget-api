@@ -3,7 +3,6 @@ import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import TransactionType from 'App/Enum/TransactionType'
 import Category from './Category'
-import Subcategory from './Subcategory'
 
 export default class Transaction extends BaseModel {
   @column({ isPrimary: true })
@@ -41,7 +40,4 @@ export default class Transaction extends BaseModel {
 
   @belongsTo(() => Category)
   public category: BelongsTo<typeof Category>
-
-  @belongsTo(() => Subcategory)
-  public subcategory: BelongsTo<typeof Subcategory>
 }

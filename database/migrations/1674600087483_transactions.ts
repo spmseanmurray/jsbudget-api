@@ -12,7 +12,6 @@ export default class extends BaseSchema {
       table.timestamp('date').notNullable()
       table.string('description').notNullable()
       table.integer('category_id').unsigned().references('id').inTable('categories')
-      table.integer('subcategory_id').unsigned().references('id').inTable('subcategories')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

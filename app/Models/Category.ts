@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import Subcategory from './Subcategory'
 import TransactionType from 'App/Enum/TransactionType'
 
 export default class Category extends BaseModel {
@@ -13,6 +12,11 @@ export default class Category extends BaseModel {
 
   @column()
   public category: string
+
+  @column({
+    prepare: (value: string[]): string => `{${value.join(',')}}`,
+  })
+  public subcategories: Array<string>
 
   @column()
   public type: TransactionType
@@ -28,7 +32,4 @@ export default class Category extends BaseModel {
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
-
-  @hasMany(() => Subcategory)
-  public subcategories: HasMany<typeof Subcategory>
 }

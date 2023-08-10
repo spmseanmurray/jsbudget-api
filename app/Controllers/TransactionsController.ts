@@ -10,7 +10,6 @@ export default class TransactionsController {
       .related('transactions')
       .query()
       .preload('category')
-      .preload('subcategory')
       .orderBy('date', 'desc')
 
     return response.json(transactions)
@@ -26,7 +25,6 @@ export default class TransactionsController {
         .related('transactions')
         .query()
         .preload('category')
-        .preload('subcategory')
         .where('id', id)
         .firstOrFail()
 
@@ -52,7 +50,6 @@ export default class TransactionsController {
         .related('transactions')
         .query()
         .preload('category')
-        .preload('subcategory')
         .where('id', transaction.id)
         .firstOrFail()
 
@@ -83,7 +80,6 @@ export default class TransactionsController {
         .related('transactions')
         .query()
         .preload('category')
-        .preload('subcategory')
         .where('id', updatedTransaction.id)
         .firstOrFail()
 
