@@ -30,9 +30,7 @@ export class UpdateCategoryValidator {
     ]),
     subcategories: schema.array
       .optional()
-      .members(
-        schema.string([rules.alpha({ allow: ['space'] }), rules.trim(), rules.maxLength(100)])
-      ),
+      .members(schema.string([rules.trim(), rules.maxLength(100)])),
     color: schema.string.optional([rules.minLength(6), rules.maxLength(7)]),
   })
 }
